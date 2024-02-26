@@ -46,18 +46,27 @@ def read_LCD_buttons():
   if (key_in20 == 1):
     return btnRIGHT
 
+instructions = "Scroll <-->"
+long_message = "this message is entirely too long to fit"
+scroll_offset = 0
+
 lcd.setCursor(0,0)
-lcd.printout("Push the buttons")
+lcd.printout(instructions)
 lcd.setCursor(0,1)
-lcd.printout("this long message won't fit")
+lcd.printout(long_message)
 
 while True:
-  lcd.setCursor(0,1)
   lcd_key = read_LCD_buttons()  #  Reading keys
   time.sleep(0.2)
   lcd_key = read_LCD_buttons()
 
   if (lcd_key == btnRIGHT):
-    lcd.scrollDisplayRight()
+    scroll_offset = max(0, scroll_offset + 1)
   elif (lcd_key == btnLEFT):
-    lcd.scrollDisplayLeft()
+    scroll_offset = max(0, scroll_offset - 1)
+
+  lcd.setCursor(0,0)
+  lcd.printout(instructions + f' +{scroll_offset:2}')
+
+  lcd.setCursor(0,1)
+  lcd.printout(long_message[scroll_offset:])

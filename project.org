@@ -1,5 +1,6 @@
 #+title: Raspberry Advisor
 #+filetags: raspberrypi:pager:linux:embeded:electronics
+#+todo: TODO DOING | DONE CANCELLED
 
 * Display
 ** Existing LCD Module
@@ -53,7 +54,9 @@ However, the LCD has its own case, outline, module thing that might do fine.
 Serial console: /dev/tty.usbmodem111101
 *** I2C
 
-* DOING Get the python version of the screen control running
+* TODO Scroll text on the screen with buttons
+
+* DONE Get the python version of the screen control running
 ** [[https://ratfactor.com/siglent-i2c][Decode i2c with Siglent]]
 ** A setback
 Last time I hooked everything up to play, the thing wouldn't boot.
@@ -64,7 +67,7 @@ Sure enough, the blue 32GB card that I had in there has bent and cracked.
 Later investigation leads me to believe that it might have happened when moving the Pi around in it's little red case.
 So from now on, I need to be sure to remove the card before I move the board around in the case (opening, closing, removing the board...).
 
-** DOING Download an OS image and write it to the card.
+** DONE Download an OS image and write it to the card.
 *** Another setback
 I re-installed a new copy of Debian on Meade the X1 Carbon. I enabled fingerprint log-in and now the thing hangs when I try to log in. (Swiping my finger the first time didn't work, so I used my password.)
 

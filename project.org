@@ -1,0 +1,105 @@
+#+title: Raspberry Advisor
+#+filetags: raspberrypi:pager:linux:embeded:electronics
+
+* Display
+** Existing LCD Module
+Microtivity 16x2 black-on-green LCD
+Breakout Board: ~80.5mm x 36mm
+Module Hosing: ~71mm x 24mm
+Display: ~65mm x 15mm
+
+I declare this as not enough characters.
+
+** DFRobot KeyPad Hat
+The product page (https://www.dfrobot.com/product-1885.html) says that there are two versions:
+- RGB Backlight (still available)
+- RGB Font (discontinued)
+
+I think that I have the "font" variation. Which I would prefer.
+From the product photos (only /so/ detailed) the boards look identical. I'd bet it's just the LCD module that changed between them. The product page seems to cover both anyway.
+
+
+https://github.com/DFRobot/DFRobot_RGB1602_RaspberryPi
+I was mad at this thing for a long time, and I'm not sure why.
+I had the impression that their examples were all just, here, run this little program that we wrote for you.
+Which, I guess, is true - perhaps I didn't realize that the code was all totally readable.
+I think I ran the C++ examples, which (being C++) all take input from the command line. So, it was basically a little command-line app.
+
+Last time I used it, I ran the Python examples, which, of course I could read all the code. (The C++ code was there to read as well, but Python is so much easier.)
+
+It was pretty simple to change the examples to try out different things.
+But they all started with ~import rgb1602~ which made me mad, "all the magic is still hidden away in this RGB1602 class!!!"
+
+I think that I thought that was referencing the C++ drivers for the device. But this morning ([2024-02-20 Tue 09:58]) I looked at the [[https://github.com/DFRobot/DFRobot_RGB1602_RaspberryPi][github repo]] and the rgb1602.py file is right there for the reading.
+
+It's kind of big and fat, but its only external dependency is this ~smbus~ library, which is a pip install.
+And [[https://github.com/kplindegaard/smbus2][here]] is this "drop-in replacement written in pure python" (https://github.com/kplindegaard/smbus2)
+
+
+** Advisor Case
+- LCD Window Dimensions: ~66mm x 21mm
+  - diagonal: 69.26mm (2.727")
+
+- Interior Display Housing: ~75mm x 30mm
+
+** 20x4 Character LCD
+Adafruit sells a 20x4 character LCD.
+It _almost_ fits. The data sheet says the active display area is ~71mm x 21mm
+Which overlaps the Advisor's LCD window.
+However, the LCD has its own case, outline, module thing that might do fine.
+
+* Raspberry Pi Pico
+** Circuit Python
+Serial console: /dev/tty.usbmodem111101
+*** I2C
+
+* DOING Get the python version of the screen control running
+** [[https://ratfactor.com/siglent-i2c][Decode i2c with Siglent]]
+** A setback
+Last time I hooked everything up to play, the thing wouldn't boot.
+I was poking around and something near the Pi's micro SD card reader was so hot it just about burned me.
+Googling around said that a defective card could heat up like that.
+Sure enough, the blue 32GB card that I had in there has bent and cracked.
+
+Later investigation leads me to believe that it might have happened when moving the Pi around in it's little red case.
+So from now on, I need to be sure to remove the card before I move the board around in the case (opening, closing, removing the board...).
+
+** DOING Download an OS image and write it to the card.
+*** Another setback
+I re-installed a new copy of Debian on Meade the X1 Carbon. I enabled fingerprint log-in and now the thing hangs when I try to log in. (Swiping my finger the first time didn't work, so I used my password.)
+
+So I either need to fix that, re-re-install a Linux OS, or write the Rasberry Pi OS from macOS.
+
+turns out, raspberrypi.com recommends an image-installer utility that runs perfectly well on Mac.
+
+* Inventory
+- Pi & Case
+- Power Adapter
+- Existing LCD
+- DFRobot KeyPad Hat
+
+
+* Some links
+** [[http://www.braddye.com/][Brad Dye's Paging Information Resource]]
+** [[https://www.rowetel.com/?p=7898][Open IP over VHF/UHF 5 - Rowetel]]
+** [[https://hampager.de/][Decentralized Amateur Paging Network (DAPNET, hampager.de)]]
+*** [[https://www.alphapoc-europe.de/epages/es754865.sf/en_GB/?ObjectPath=/Shops/es754865/Products/602R][ALPHAPOC 602r]]
+front-panel programmable pager with 8 CAPCODEs (they seem to call them "RIC" instead of "CAPCODE")
+There is an Android app for sending pages, but not an iOS one. I should write the iOS one.
+
+LCD Dimensions slightly larger than 80x36mm
+http://goughlui.com/2016/01/15/tech-flashback-motorola-advisor-pocsag-5121200bps-pager/
+
+| Component                                 | Pic              | Link                                    | Count | Price  |
+|-------------------------------------------+------------------+-----------------------------------------+-------+--------|
+| Right Angle Tactile Button (Through-hole) | [[./10791-01.jpg]]   | https://www.sparkfun.com/products/10791 |     1 | $0.50  |
+| Mini Pushbutton (SMD)                     | [[./08720-03-L.jpg]] | https://www.sparkfun.com/products/8720  |     6 | $0.95  |
+| WiFi Feather (Slow computer with WiFi)    | [[./3056-06.jpg]]    | https://www.adafruit.com/products/3056  |     1 | $34.95 |
+| Speaker                                   |                  |                                         |       |        |
+| LED (near side-button)                    |                  |                                         |       |        |
+| Existing 16x2 display                     |                  |                                         |       |        |
+
+** Now the Hard Part
+What will this device do? Think of some use-cases and list them here.
+
+

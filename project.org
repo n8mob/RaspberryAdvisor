@@ -2,7 +2,9 @@
 #+filetags: raspberrypi:pager:linux:embeded:electronics
 #+todo: TODO DOING | DONE CANCELLED
 
-* TODO Scroll text on the screen with buttons
+* TODO blink a cursor
+
+* DONE Scroll text on the screen with buttons
 
 * DONE Get the python version of the screen control running
 ** [[https://ratfactor.com/siglent-i2c][Decode i2c with Siglent]]

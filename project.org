@@ -2,7 +2,15 @@
 #+filetags: raspberrypi:pager:linux:embeded:electronics
 #+todo: TODO DOING | DONE CANCELLED
 
-* TODO blink a cursor
+* TODO select character
+1. [ ] Change mode (and show different cursor) with the select button
+2. [ ] Edit letters with up and down
+3. [ ] 
+
+* DONE move cursor instead of scrolling the message
+** DONE move within top row
+** DONE move row with up/down buttons
+* DONE blink a cursor
 
 * DONE Scroll text on the screen with buttons
 

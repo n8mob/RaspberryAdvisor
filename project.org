@@ -2,7 +2,16 @@
 #+filetags: raspberrypi:pager:linux:embeded:electronics
 #+todo: TODO DOING | DONE CANCELLED
 
-* TODO improve responsiveness
+* CANCELLED Figure out menu navigation, or add a button or something.
+Two lines may end up being pretty limiting.
+On the other hand, we could make it _very_ purpose-built and not have a lot of menus and things.
+I dunno.
+
+Okay - that's it.
+I'm going to build a quick "DFRobot MAGiE" to implement the interfaces in MAGiEpy
+
+* DONE improve responsiveness
+it's a bit hectic, but it *is* more responsive.
 
 * DONE select character
 1. [X] Change mode (and show different cursor) with the select button

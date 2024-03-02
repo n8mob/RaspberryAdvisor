@@ -24,6 +24,7 @@ GPIO.setup(20, GPIO.IN)
 class LcdControl:
   def __init__(self):
     self.lcd = rgb1602.RGB1602(16,2)
+    self.lcd.cursor()
   
     # Define keys
     self.key_in  = 0
@@ -45,6 +46,7 @@ class LcdControl:
     
   
     self.cursor_state = False
+    self.edit_mode = False
     self.cursor_col = 0
     self.cursor_row = 0
     self.last_cursor_change = datetime.now()
@@ -84,6 +86,14 @@ class LcdControl:
 
 
   def move_cursor(self, lcd_key):
+    if lcd_key == self.btnSELECT:
+      if self.edit_mode:
+        self.lcd.stopBlink()
+        self.edit_mode = False
+      else:
+        self.edit_mode = True
+        self.lcd.blink()
+
     if lcd_key == self.btnRIGHT:
       self.cursor_col = (self.cursor_col + 1) % 16
     elif lcd_key == self.btnLEFT:
@@ -119,8 +129,6 @@ if __name__ == '__main__':
     lcd_key = d.read_LCD_buttons()  #  Reading keys
     time.sleep(0.2)
     lcd_key = d.read_LCD_buttons()
-
-    d.blink_cursor()
 
     d.move_cursor(lcd_key)
     

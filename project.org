@@ -3,7 +3,7 @@
 #+todo: TODO DOING | DONE CANCELLED
 
 * TODO select character
-1. [ ] Change mode (and show different cursor) with the select button
+1. [X] Change mode (and show different cursor) with the select button
 2. [ ] Edit letters with up and down
 3. [ ] 
 

@@ -25,30 +25,40 @@ class LcdControl:
   def __init__(self):
     self.lcd = rgb1602.RGB1602(16,2)
     self.lcd.cursor()
-  
+    
     # Define keys
     self.key_in  = 0
-  
+    
     self.btnRIGHT  = 0
     self.btnUP     = 1
     self.btnDOWN   = 2
     self.btnLEFT   = 3
     self.btnSELECT = 4
-    self.instructions = "Scroll <-->"
-    self.long_message = "this message is entirely too long to fit"
+    
+    self.all_messages = [
+      [
+        #0123456789ABCDEF
+        'Learn you some',
+        'text editing.'
+      ],[
+        
+        'steady coding',
+        ''
+      ],[
+        '"the codeman" is',
+        'too derivative'
+      ]
+    ]
+
+    self.message = self.all_messages[2]
+    
     self.scroll_offset = 0
     self.blink_ms = 800
-  
-    self.lcd.setCursor(0,0)
-    self.lcd.printout(self.instructions)
-    self.lcd.setCursor(0,1)
-    self.lcd.printout(self.long_message)
     
-  
     self.cursor_state = False
     self.edit_mode = False
-    self.cursor_col = 0
-    self.cursor_row = 0
+    self.c = 0
+    self.r = 0
     self.last_cursor_change = datetime.now()
 
 
@@ -84,6 +94,28 @@ class LcdControl:
       else:
         self.lcd.cursor_off()
 
+  def increment_char(self, n):
+    line = self.message[self.r]
+
+    while len(line) <= self.c:
+      line = f'{line} '
+      
+    l = line[self.c]
+    l = chr(ord(l) + n)
+    self.message[self.r] = line[:self.c] + l + line[self.c + 1:]
+    
+  def increment_char_alphalimit(self, n):
+    line = self.message[self.r]
+
+    l = line[self.c]
+
+    offset = ord('a') if l.islower() else ord('A')
+
+    l = chr((ord(l) - offset + n) % 26 + offset)
+    line = line[:self.c] + l + line[self.c + 1:]
+    
+    self.message[self.r] = line
+    
 
   def move_cursor(self, lcd_key):
     if lcd_key == self.btnSELECT:
@@ -93,17 +125,30 @@ class LcdControl:
       else:
         self.edit_mode = True
         self.lcd.blink()
+      return
 
     if lcd_key == self.btnRIGHT:
-      self.cursor_col = (self.cursor_col + 1) % 16
+      self.c = (self.c + 1) % 16
     elif lcd_key == self.btnLEFT:
-      self.cursor_col = (self.cursor_col - 1) % 16
-    elif lcd_key == self.btnUP:
-      self.cursor_row = (self.cursor_row - 1) % 2
-    elif lcd_key == self.btnDOWN:
-      self.cursor_row = (self.cursor_row + 1) %2
+      self.c = (self.c - 1) % 16
 
-    self.lcd.setCursor(self.cursor_col, self.cursor_row)
+    if self.edit_mode:
+      if lcd_key == self.btnUP:
+        self.increment_char(1)
+      elif lcd_key == self.btnDOWN:
+        self.increment_char(-1)        
+    else:
+      if lcd_key == self.btnUP:
+        self.r = (self.r - 1) % 2
+      elif lcd_key == self.btnDOWN:
+        self.r = (self.r + 1) %2
+
+    self.lcd.setCursor(0, 0)
+    self.lcd.printout(self.message[0])
+    self.lcd.setCursor(0, 1)
+    self.lcd.printout(self.message[1])
+    
+    self.lcd.setCursor(self.c, self.r)
 
   
   def scroll_and_return_cursor(self, lcd_key):
@@ -113,10 +158,10 @@ class LcdControl:
       self.scroll_offset = max(0, self.scroll_offset - 1)
 
     self.lcd.setCursor(0,0)
-    self.lcd.printout(self.instructions + f' +{self.scroll_offset:2}')
+    self.lcd.printout(self.message[0] + f' +{self.scroll_offset:2}')
 
     self.lcd.setCursor(0,1)
-    self.lcd.printout(self.long_message[self.scroll_offset:])
+    self.lcd.printout(self.message[1][self.scroll_offset:])
 
     self.lcd.setCursor(0,0)
 
@@ -126,9 +171,9 @@ if __name__ == '__main__':
   d = LcdControl()
   
   while True:
-    lcd_key = d.read_LCD_buttons()  #  Reading keys
-    time.sleep(0.2)
-    lcd_key = d.read_LCD_buttons()
-
-    d.move_cursor(lcd_key)
-    
+    lcd_key1 = d.read_LCD_buttons()  #  Reading keys
+    time.sleep(0.07)
+    lcd_key2 = d.read_LCD_buttons() # why read twice?
+    if lcd_key1 == lcd_key2:
+      d.move_cursor(lcd_key1)
+      

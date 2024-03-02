@@ -2,10 +2,11 @@
 #+filetags: raspberrypi:pager:linux:embeded:electronics
 #+todo: TODO DOING | DONE CANCELLED
 
-* TODO select character
+* TODO improve responsiveness
+
+* DONE select character
 1. [X] Change mode (and show different cursor) with the select button
-2. [ ] Edit letters with up and down
-3. [ ] 
+2. [X] Edit letters with up and down
 
 * DONE move cursor instead of scrolling the message
 ** DONE move within top row

@@ -2,6 +2,10 @@
 #+filetags: raspberrypi:pager:linux:embeded:electronics
 #+todo: TODO DOING | DONE CANCELLED
 
+* TODO Find i2c address in DFRobot 1602 code
+This new 4-line display also uses i2c
+But when I simply hooked it up, nothing showed on the screen. But I think that’s because the devices are listening on different addresses.
+
 * CANCELLED Figure out menu navigation, or add a button or something.
 Two lines may end up being pretty limiting.
 On the other hand, we could make it _very_ purpose-built and not have a lot of menus and things.

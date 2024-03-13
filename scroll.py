@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.expanduser('~/c/DFRobot_RGB1602_RaspberryPi/python'))
+sys.path.append(os.path.expanduser('~/c/DFRobot_RGB1602_RaspberryPi/python'))
 from datetime import datetime
 import time
 import signal

@@ -7,11 +7,6 @@ import signal
 import RPi.GPIO as GPIO
 import rgb1602
 
-def handle_interrupt(sig, frame):
-  print('\n\ngoodbye!\n\n')
-  sys.exit(0)
-  
-signal.signal(signal.SIGINT, handle_interrupt)
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -24,6 +19,7 @@ GPIO.setup(20, GPIO.IN)
 
 class LcdControl:
   def __init__(self):
+    signal.signal(signal.SIGINT, self.handle_interrupt)
     self.lcd = rgb1602.RGB1602(16,2)
     self.lcd.cursor()
     
@@ -165,6 +161,12 @@ class LcdControl:
     self.lcd.printout(self.message[1][self.scroll_offset:])
 
     self.lcd.setCursor(0,0)
+
+  def handle_interrupt(self, sig, frame):
+    print('\n\ngoodbye!\n\n')
+    self.lcd.noDisplay()
+    sys.exit(0)
+
 
 
 
